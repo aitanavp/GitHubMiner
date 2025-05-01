@@ -1,7 +1,7 @@
-package aiss.githubminer.service.GitHubService;
+package aiss.githubminer.service;
 
-import aiss.githubminer.model.GitHubData.User.GitHubUser;
-import aiss.githubminer.model.User;
+import aiss.githubminer.model.Comment;
+import aiss.githubminer.model.GitHubData.Comment.GitHubComment;
 import aiss.githubminer.model.utils.GitHubMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,8 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
-public class UserService {
+public class CommentService {
+
     @Autowired
     RestTemplate restTemplate;
 
@@ -22,13 +26,13 @@ public class UserService {
     @Value("${github.token}")
     String token;
 
-    public User getUserByLogin(String login) {
-        String uri = baseUri + "/users/" + login;
+    public List<Comment> getComments(String owner, String repo, Integer issue) {
+        String uri = baseUri + "/repos/" + owner + "/" + repo + "/issues/" + issue.toString() + "/comments";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token );
-        HttpEntity<GitHubUser> request = new HttpEntity<>(null, headers);
-        ResponseEntity<GitHubUser> response = restTemplate.exchange(uri,
-                HttpMethod.GET, request, GitHubUser.class);
-        return GitHubMapper.toUser(response.getBody());
+        HttpEntity<GitHubComment[]> request = new HttpEntity<>(null, headers);
+        ResponseEntity<GitHubComment[]> response = restTemplate.exchange(uri,
+                HttpMethod.GET, request, GitHubComment[].class);
+        return Arrays.stream(response.getBody()).map(GitHubMapper::toComment).toList();
     }
 }

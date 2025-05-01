@@ -1,4 +1,4 @@
-package aiss.githubminer.service.GitHubService;
+package aiss.githubminer.service;
 
 
 import aiss.githubminer.model.Commit;

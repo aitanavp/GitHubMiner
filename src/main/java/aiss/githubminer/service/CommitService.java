@@ -1,4 +1,4 @@
-package aiss.githubminer.service.GitHubService;
+package aiss.githubminer.service;
 
 import aiss.githubminer.model.GitHubData.Commit.GitHubCommit;
 import aiss.githubminer.model.utils.GitHubMapper;
@@ -13,6 +13,9 @@ import aiss.githubminer.model.Commit;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,9 +32,9 @@ public class CommitService {
     String token;
 
     public List<Commit> sinceCommits(String owner, String repo, Integer days, Integer pages){
-        LocalDate date = LocalDate.now().minusDays(days);
+        String since = OffsetDateTime.now(ZoneOffset.UTC).minusDays(days).truncatedTo(ChronoUnit.SECONDS).toString();
         String uri = baseUri + "/repos/" + owner + "/" + repo +
-                "/commits?page=1&since=" + date;
+                "/commits?page=1&since=" + since;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token );
         HttpEntity<GitHubCommit[]> request = new HttpEntity<>(null, headers);

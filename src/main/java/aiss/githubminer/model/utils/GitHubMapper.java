@@ -61,8 +61,11 @@ public class GitHubMapper {
     // TODO: ASSIGNEES DO NOT HAVE A NAME
     public static User toUser(GitHubUser data) {
         User user = new User();
+        if (data == null) {
+            return null;
+        }
         user.setId(UUID.randomUUID().toString());
-        user.setName(data.getName());
+        user.setName(data.getName()==null?"":data.getName());
         user.setUsername(data.getLogin());
         user.setAvatarUrl(data.getAvatarUrl());
         user.setWebUrl(data.getUrl());

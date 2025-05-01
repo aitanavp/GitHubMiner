@@ -1,7 +1,9 @@
-package controller;
+package aiss.githubminer.controller;
 
+import aiss.githubminer.model.Commit;
+import aiss.githubminer.model.Issue;
 import aiss.githubminer.model.Project;
-import aiss.githubminer.service.GitHubService.ProjectService;
+import aiss.githubminer.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -9,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/githubminer")
+@RequestMapping("/github")
 public class GitHubController {
 
     @Autowired
