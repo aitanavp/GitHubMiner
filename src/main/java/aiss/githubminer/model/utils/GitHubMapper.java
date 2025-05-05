@@ -48,7 +48,7 @@ public class GitHubMapper {
         issue.setCreatedAt(data.getCreatedAt());
         issue.setUpdatedAt(data.getUpdatedAt());
         issue.setClosedAt(data.getClosedAt());
-        issue.setLabels(data.getLabels().stream().map(GitHubLabel::toString).toList());
+        issue.setLabels(data.getLabels().stream().map(GitHubLabel::getName).toList());
         issue.setAuthor(toUser(data.getUser()));
         issue.setAssignee(toUser(data.getAssignee()));
         issue.setUpvotes(data.getReactions().getUpvote());

@@ -23,7 +23,7 @@ public class GitHubController {
     @Autowired
     RestTemplate restTemplate;
 
-    final String uri = "http://localhost:8080";
+    final String uri = "http://localhost:8080/gitminer/projects";
 
     @GetMapping("/{owner}/{repo}")
     public Project getData(@PathVariable String owner, @PathVariable String repo,
