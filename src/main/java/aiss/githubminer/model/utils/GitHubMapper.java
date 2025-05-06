@@ -45,6 +45,7 @@ public class GitHubMapper {
     public static Issue toIssue(GitHubIssue data, List<Comment> comments) {
         Issue issue = new Issue();
         issue.setId(data.getId().toString());
+        issue.setRefId(data.getNumber().toString());
         issue.setTitle(data.getTitle());
         issue.setDescription(data.getBody());
         issue.setState(data.getState());
