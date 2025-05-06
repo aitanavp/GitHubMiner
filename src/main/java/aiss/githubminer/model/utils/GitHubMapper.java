@@ -15,8 +15,8 @@ public class GitHubMapper {
 
     public static Commit toCommit(GitHubCommit data) {
         Commit commit = new Commit();
-        commit.setId(UUID.randomUUID().toString());
-        commit.setTitle("");
+        commit.setId(data.getSha());
+        commit.setTitle(data.getCommit().getMessage().split("\n")[0]);
         commit.setMessage(data.getCommit().getMessage());
         commit.setAuthorName(data.getCommit().getAuthor().getName());
         commit.setAuthorEmail(data.getCommit().getAuthor().getEmail());
@@ -31,7 +31,7 @@ public class GitHubMapper {
 
     public static Project toProject(GitHubRepository data, List<Commit> commits, List<Issue> issues) {
         Project project = new Project();
-        project.setId(UUID.randomUUID().toString());
+        project.setId(data.getId().toString());
         project.setName(data.getName());
         project.setWebUrl(data.getUrl());
         project.setIssues(issues);
@@ -41,7 +41,7 @@ public class GitHubMapper {
 
     public static Issue toIssue(GitHubIssue data, List<Comment> comments) {
         Issue issue = new Issue();
-        issue.setId(UUID.randomUUID().toString());
+        issue.setId(data.getId().toString());
         issue.setTitle(data.getTitle());
         issue.setDescription(data.getBody());
         issue.setState(data.getState());
@@ -58,14 +58,13 @@ public class GitHubMapper {
         return issue;
     }
 
-    // TODO: ASSIGNEES DO NOT HAVE A NAME
     public static User toUser(GitHubUser data) {
         User user = new User();
-        if (data == null) {
+        if (data == null) { //To handle when assignees are null
             return null;
         }
-        user.setId(UUID.randomUUID().toString());
-        user.setName(data.getName()==null?"":data.getName());
+        user.setId(data.getId().toString());
+        user.setName(data.getName()==null?"":data.getName()); //ASSIGNEES DO NOT HAVE A NAME
         user.setUsername(data.getLogin());
         user.setAvatarUrl(data.getAvatarUrl());
         user.setWebUrl(data.getUrl());
@@ -75,7 +74,7 @@ public class GitHubMapper {
 
     public static Comment toComment(GitHubComment data) {
         Comment comment = new Comment();
-        comment.setId(UUID.randomUUID().toString());
+        comment.setId(data.getId().toString());
         comment.setBody(data.getBody());
         comment.setAuthor(toUser(data.getUser()));
         comment.setCreatedAt(data.getCreatedAt());
