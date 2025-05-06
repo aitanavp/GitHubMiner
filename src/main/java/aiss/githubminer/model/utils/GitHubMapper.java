@@ -16,8 +16,11 @@ public class GitHubMapper {
     public static Commit toCommit(GitHubCommit data) {
         Commit commit = new Commit();
         commit.setId(data.getSha());
-        commit.setTitle(data.getCommit().getMessage().split("\n")[0]);
-        commit.setMessage(data.getCommit().getMessage());
+        String fullMessage = data.getCommit().getMessage();
+        String title = fullMessage.split("\n")[0];
+        String message = fullMessage.substring(fullMessage.indexOf("\n") + 1);
+        commit.setTitle(title);
+        commit.setMessage(message);
         commit.setAuthorName(data.getCommit().getAuthor().getName());
         commit.setAuthorEmail(data.getCommit().getAuthor().getEmail());
         commit.setAuthoredDate(data.getCommit().getAuthor().getDate());
