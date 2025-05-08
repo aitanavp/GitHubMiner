@@ -9,7 +9,6 @@ import aiss.githubminer.model.GitHubData.Repository.GitHubRepository;
 import aiss.githubminer.model.GitHubData.User.GitHubUser;
 
 import java.util.List;
-import java.util.UUID;
 
 public class GitHubMapper {
 
@@ -45,7 +44,6 @@ public class GitHubMapper {
     public static Issue toIssue(GitHubIssue data, List<Comment> comments) {
         Issue issue = new Issue();
         issue.setId(data.getId().toString());
-        issue.setRefId(data.getNumber().toString());
         issue.setTitle(data.getTitle());
         issue.setDescription(data.getBody());
         issue.setState(data.getState());
