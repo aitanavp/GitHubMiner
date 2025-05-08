@@ -26,7 +26,7 @@ public class CommentService {
     @Value("${github.token}")
     String token;
 
-    public List<Comment> getComments(String owner, String repo, Integer issue) {
+    public List<Comment> getCommentsFromIssues(String owner, String repo, Integer issue) {
         String uri = baseUri + "/repos/" + owner + "/" + repo + "/issues/" + issue.toString() + "/comments";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token );
@@ -35,4 +35,15 @@ public class CommentService {
                 HttpMethod.GET, request, GitHubComment[].class);
         return Arrays.stream(response.getBody()).map(GitHubMapper::toComment).toList();
     }
+
+    public List<Comment> getCommentsFromPullRequesrs(String owner, String repo, Integer pull) {
+        String uri = baseUri + "/repos/" + owner + "/" + repo + "/pulls/" + pull.toString() + "/comments";
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token );
+        HttpEntity<GitHubComment[]> request = new HttpEntity<>(null, headers);
+        ResponseEntity<GitHubComment[]> response = restTemplate.exchange(uri,
+                HttpMethod.GET, request, GitHubComment[].class);
+        return Arrays.stream(response.getBody()).map(GitHubMapper::toComment).toList();
+    }
+
 }

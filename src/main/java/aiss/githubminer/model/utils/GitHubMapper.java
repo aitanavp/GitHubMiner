@@ -5,6 +5,7 @@ import aiss.githubminer.model.GitHubData.Comment.GitHubComment;
 import aiss.githubminer.model.GitHubData.Commit.GitHubCommit;
 import aiss.githubminer.model.GitHubData.Issue.GitHubIssue;
 import aiss.githubminer.model.GitHubData.Issue.GitHubLabel;
+import aiss.githubminer.model.GitHubData.PullRequest.GitHubPullRequest;
 import aiss.githubminer.model.GitHubData.Repository.GitHubRepository;
 import aiss.githubminer.model.GitHubData.User.GitHubUser;
 
@@ -31,13 +32,14 @@ public class GitHubMapper {
         return commit;
     }
 
-    public static Project toProject(GitHubRepository data, List<Commit> commits, List<Issue> issues) {
+    public static Project toProject(GitHubRepository data, List<Commit> commits, List<Issue> issues, List<PullRequest> pulls) {
         Project project = new Project();
         project.setId(data.getId().toString());
         project.setName(data.getName());
         project.setWebUrl(data.getUrl());
         project.setIssues(issues);
         project.setCommits(commits);
+        project.setPullRequests(pulls);
         return project;
     }
 
@@ -83,6 +85,18 @@ public class GitHubMapper {
         comment.setUpdatedAt(data.getUpdatedAt());
 
         return comment;
+    }
+
+    public static PullRequest toPullRequest(GitHubPullRequest data, List<Comment> comments) {
+        PullRequest pullRequest = new PullRequest();
+        pullRequest.setId(data.getId().toString());
+        pullRequest.setTitle(data.getTitle());
+        pullRequest.setDescription(data.getBody());
+        pullRequest.setState(data.getState());
+        pullRequest.setCreatedAt(data.getCreatedAt());
+        pullRequest.setUpdatedAt(data.getUpdatedAt());
+        pullRequest.setComments(comments);
+        return pullRequest;
     }
 
 

@@ -29,16 +29,18 @@ public class GitHubController {
     public Project getData(@PathVariable String owner, @PathVariable String repo,
                            @RequestParam(defaultValue = "5") Integer sinceCommits,
                            @RequestParam(defaultValue = "20") Integer sinceIssues,
+                           @RequestParam(defaultValue = "5") Integer sincePulls,
                            @RequestParam(defaultValue = "2") Integer maxPages){
-        return projectService.getProjectByOwnerAndName(owner,repo, sinceCommits, sinceIssues,
-                maxPages);
+        return projectService.getProjectByOwnerAndName(owner,repo, sinceCommits, sinceIssues,sincePulls, maxPages);
+
     }
     @PostMapping("/{owner}/{repo}")
     public Project sendData(@PathVariable String owner, @PathVariable String repo,
                             @RequestParam(defaultValue = "5") Integer sinceCommits,
                             @RequestParam(defaultValue = "20") Integer sinceIssues,
+                            @RequestParam(defaultValue = "5") Integer sincePulls,
                             @RequestParam(defaultValue = "2") Integer maxPages) {
-        Project project = projectService.getProjectByOwnerAndName(owner, repo, sinceCommits, sinceIssues, maxPages);
+        Project project = projectService.getProjectByOwnerAndName(owner, repo, sinceCommits, sinceIssues,sincePulls , maxPages);
         HttpEntity<Project> request = new HttpEntity<>(project);
         ResponseEntity<Project> response = restTemplate.exchange(uri, HttpMethod.POST,request, Project.class);
         return response.getBody();

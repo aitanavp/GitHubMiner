@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "patch_url"
 })
 @Generated("jsonschema2pojo")
-public class GitHubPullRequest {
+public class GitHubPullRequestIssue {
 
     @JsonProperty("url")
     private String url;
@@ -85,7 +85,7 @@ public class GitHubPullRequest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(GitHubPullRequest.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(GitHubPullRequestIssue.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("url");
         sb.append('=');
         sb.append(((this.url == null)?"<null>":this.url));

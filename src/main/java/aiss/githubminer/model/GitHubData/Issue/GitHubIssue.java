@@ -87,7 +87,7 @@ public class GitHubIssue {
     @JsonProperty("comments")
     private Integer comments;
     @JsonProperty("pull_request")
-    private GitHubPullRequest pullRequest;
+    private GitHubPullRequestIssue pullRequest;
     @JsonProperty("closed_at")
     private String closedAt;
     @JsonProperty("created_at")
@@ -306,12 +306,12 @@ public class GitHubIssue {
     }
 
     @JsonProperty("pull_request")
-    public GitHubPullRequest getPullRequest() {
+    public GitHubPullRequestIssue getPullRequest() {
         return pullRequest;
     }
 
     @JsonProperty("pull_request")
-    public void setPullRequest(GitHubPullRequest pullRequest) {
+    public void setPullRequest(GitHubPullRequestIssue pullRequest) {
         this.pullRequest = pullRequest;
     }
 
